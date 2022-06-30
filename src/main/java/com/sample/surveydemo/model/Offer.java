@@ -1,18 +1,21 @@
 package com.sample.surveydemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sample.surveydemo.model.enums.Checker;
 import com.sample.surveydemo.model.enums.Currency;
 import com.sample.surveydemo.model.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-@Entity @Getter @Setter
-public class Offer extends AbstractEntity {
-
-    @NotNull
+@Entity @Getter @Setter @JsonIgnoreProperties(ignoreUnknown = true)
+public class Offer {
+    @Id
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @NotNull

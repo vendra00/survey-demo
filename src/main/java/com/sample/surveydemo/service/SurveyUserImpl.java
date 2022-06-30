@@ -18,13 +18,6 @@ public class SurveyUserImpl implements SurveyUserService {
 
     private final SurveyUserRepository repository;
 
-    private static final String PARTNER_ID = "panthera";
-    private static final String API_KEY = "5a69f5fe6ce2bac3cc3d698987e92455154560d35838cf8466f8fcf184b1360d";
-    private static final String GET_ALL_OFFERS_API = "https://" + PARTNER_ID + ".api.hasoffers.com/Apiv3/json?api_key=" + API_KEY + "&Target=Affiliate_Offer&Method=findAll";
-
-    @Autowired
-    private RestTemplate restTemplate;
-
     public SurveyUserImpl(SurveyUserRepository repository) {
         this.repository = repository;
     }
@@ -48,12 +41,6 @@ public class SurveyUserImpl implements SurveyUserService {
     public List<SurveyUser> getAllSurveyUsers() {
         log.info("Get All Users - Service Call");
         try {
-            //chegar os dados
-            //https://test.api.hasoffers.com/Apiv3/json?api_key=test&Target=Affiliate_AffiliateUser&Method=findAll
-
-            //filtrar de acordo com o que quiser
-
-            //retornar lista filtrada
             return repository.findAll();
         } catch (Exception e) {
             log.error("ERROR : " + e);
