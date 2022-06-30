@@ -19,7 +19,6 @@ public class OfferServiceImpl implements OfferService{
     public static final String GET_ALL_OFFERS_API = "https://" + PARTNER_ID + ".api.hasoffers.com/Apiv3/json?api_key=" + API_KEY + "&Target=Affiliate_Offer&Method=findAll";
 
     private final OfferRepository repository;
-
     private final RestTemplate restTemplate;
 
     @Autowired
