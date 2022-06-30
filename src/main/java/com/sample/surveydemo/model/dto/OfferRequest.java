@@ -1,24 +1,30 @@
 package com.sample.surveydemo.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OfferRequest {
 
+    @JsonProperty("Target")
     private String target;
+    @JsonProperty("Format")
     private String format;
+    @JsonProperty("Service")
     private String service;
+    @JsonProperty("Version")
     private String version;
-    private String api_key;
+    @JsonProperty("api_key")
+    private String apiKey;
+    @JsonProperty("Method")
     private String method;
-    private List<String> contains;
+    @JsonProperty("contain")
+    private List<String> contain;
 
 }
