@@ -1,4 +1,4 @@
-package com.sample.surveydemo.model.dto;
+package com.sample.surveydemo.model.dto.offer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

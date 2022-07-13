@@ -1,10 +1,12 @@
-package com.sample.surveydemo.model.dto;
+package com.sample.surveydemo.model.dto.offer;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sample.surveydemo.model.dto.offer.OfferData;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Map;
 
 @Getter @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,5 +17,5 @@ public class OfferResponse {
     @JsonProperty("httpStatus")
     private int httpStatus;
     @JsonProperty("data")
-    private OfferData data;
+    private Map<String, OfferData> data;
 }

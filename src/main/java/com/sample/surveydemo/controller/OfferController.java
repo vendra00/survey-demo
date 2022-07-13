@@ -1,6 +1,6 @@
 package com.sample.surveydemo.controller;
 
-import com.sample.surveydemo.model.dto.OfferMapper;
+import com.sample.surveydemo.model.dto.offer.OfferMapper;
 import com.sample.surveydemo.service.OfferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
