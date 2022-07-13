@@ -59,13 +59,18 @@ public class OfferServiceImpl implements OfferService{
             }
             saveAllOffers(list);
         }catch (Exception e){
-            throw new OfferRequestException("There was a problem when saving all offers in database");
+            throw new OfferRequestException("There was a problem when processing all offers in database");
         }
     }
 
     @Override
     public List<Offer> saveAllOffers(List<Offer> list) {
         log.info("Save All Offers - Service Call");
-        return repository.saveAll(list);
+        try {
+            return repository.saveAll(list);
+        }  catch (Exception e) {
+            throw new OfferRequestException("There was a problem when saving all offers in database");
+        }
+
     }
 }
