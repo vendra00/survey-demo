@@ -1,9 +1,6 @@
 package com.sample.surveydemo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sample.surveydemo.model.enums.Checker;
-import com.sample.surveydemo.model.enums.Currency;
-import com.sample.surveydemo.model.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity @Getter @Setter @JsonIgnoreProperties(ignoreUnknown = true)
 public class Offer {
@@ -19,109 +18,118 @@ public class Offer {
     private Long id;
 
     @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
+    @Column(name = "description", length=100000)
     private String description;
 
-    @NotNull
-    private int requireApproval;
+    @Column(name = "require_approval")
+    private boolean requireApproval;
 
-    @NotNull
+    @Column(name = "require_terms_conditions")
     private int requireTermsConditions;
 
-    @NotNull
-    private String preview_url;
+    @Column(name = "preview_url")
+    private String previewUrl;
 
-    @NotNull
-    private String currency = Currency.UNDEFINED.name();
+    @Column(name = "currency")
+    private String currency;
 
-    @NotNull
+    @Column(name = "default_payout")
     private double defaultPayout;
 
-    @NotNull
+    @Column(name = "protocol")
     private String protocol;
 
-    @NotNull
-    private String status = Status.UNDEFINED.name();
+    @Column(name = "status")
+    private String status;
 
-    @NotNull
-    private String expirationDate;
-
-    @NotNull
+    @Column(name = "payout_type")
     private String payoutType;
 
+    @Column(name = "percent_payout")
     private double percentPayout;
 
-    @NotNull
+    @Column(name = "expiration_date")
+    private LocalDateTime expirationDate;
+
+    @Column(name = "modified")
+    private Timestamp modified;
+
+    @Column(name = "featured")
     private String featured;
 
-    @NotNull
+    @Column(name = "conversion_cap")
     private int conversionCap;
 
-    @NotNull
+    @Column(name = "monthly_conversion_cap")
     private int monthlyConversionCap;
 
-    @NotNull
+    @Column(name = "payout_cap")
     private double payoutCap;
 
-    @NotNull
+    @Column(name = "monthly_payout_cap")
     private double monthlyPayoutCap;
 
-    @NotNull
-    private int allowMultipleConversions = Checker.UNDEFINED.ordinal();
+    @Column(name = "allow_multiple_conversions")
+    private int allowMultipleConversions;
 
-    @NotNull
-    private int allowWebsiteLinks = Checker.UNDEFINED.ordinal();
+    @Column(name = "allow_website_links")
+    private boolean allowWebsiteLinks;
 
-    @NotNull
-    private int showCustomVariables = Checker.UNDEFINED.ordinal();
+    @Column(name = "show_custom_variables")
+    private boolean showCustomVariables;
 
-    @NotNull
+    @Column(name = "session_hours")
     private String sessionHours;
 
-    @NotNull
-    private int showMailList = Checker.UNDEFINED.ordinal();
+    @Column(name = "show_mail_list")
+    private boolean showMailList;
 
-    @NotNull
-    private int dneListId = Checker.UNDEFINED.ordinal();
+    @Column(name = "dne_list_id")
+    private int dneListId;
 
-    @NotNull
-    private int emailInstructions = Checker.UNDEFINED.ordinal();
+    @Column(name = "email_instructions")
+    private boolean emailInstructions;
 
+    @Column(name = "email_instructions_from")
     private String emailInstructionsFrom;
 
+    @Column(name = "email_instructions_subject")
     private String emailInstructionsSubject;
 
-    @NotNull
-    private int enforceSecureTrackingLink = Checker.UNDEFINED.ordinal();
+    @Column(name = "enforce_secure_tracking_link")
+    private int enforceSecureTrackingLink;
 
-    @NotNull
-    private int hasGoalsEnabled = Checker.UNDEFINED.ordinal();
+    @Column(name = "has_goals_enabled")
+    private boolean hasGoalsEnabled;
 
+    @Column(name = "default_goal_name")
     private String defaultGoalName;
 
-    @NotNull
-    private int modified;
+    @Column(name = "use_target_rules")
+    private boolean useTargetRules;
 
-    @NotNull
-    private int useTargetRules = Checker.UNDEFINED.ordinal();
+    @Column(name = "use_payout_groups")
+    private int usePayoutGroups;
 
-    @NotNull
-    private int usePayoutGroups = Checker.UNDEFINED.ordinal();
-
+    @Column(name = "link_platform")
     private String linkPlatform;
 
-    @NotNull
-    private int isExpired = Checker.UNDEFINED.ordinal();
+    @Column(name = "is_expired")
+    private boolean isExpired;
 
+    @Column(name = "dne_download_url")
     private String dneDownloadUrl;
 
+    @Column(name = "dne_unsubscribe_url")
     private String dneUnsubscribeUrl;
 
-    @NotNull
+    @Column(name = "dne_third_party_list")
     private boolean dneThirdPartyList;
 
+    @Column(name = "approval_status")
     private String approvalStatus;
 
 }

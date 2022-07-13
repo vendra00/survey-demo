@@ -1,8 +1,8 @@
 package com.sample.surveydemo.service;
 
 import com.sample.surveydemo.exception.OfferRequestException;
-import com.sample.surveydemo.exception.SurveyUserRequestException;
 import com.sample.surveydemo.model.Offer;
+import com.sample.surveydemo.model.dto.offer.OfferData;
 import com.sample.surveydemo.model.dto.offer.OfferMapper;
 import com.sample.surveydemo.repository.OfferRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+import java.util.*;
 
 @Service @Slf4j
 public class OfferServiceImpl implements OfferService{
@@ -39,10 +39,27 @@ public class OfferServiceImpl implements OfferService{
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(List.of(MediaType.APPLICATION_JSON));
             HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-            return restTemplate.exchange(GET_ALL_OFFERS_API, HttpMethod.GET, entity, OfferMapper.class);
+            ResponseEntity<OfferMapper> response = restTemplate.exchange(GET_ALL_OFFERS_API, HttpMethod.GET, entity, OfferMapper.class);
+            processAndSaveOffers(response);
+            return response;
         }catch (Exception e) {
             log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when fetching all offers");
+        }
+    }
+
+    private void processAndSaveOffers(ResponseEntity<OfferMapper> response) {
+        log.info("Process and save Offers - Service Call");
+        Map<String, OfferData> map;
+        List<Offer> list = new ArrayList<>();
+        try{
+            map = Objects.requireNonNull(response.getBody()).getResponse().getData();
+            for (OfferData mapper : map.values()){
+                list.add(mapper.getOffer());
+            }
+            saveAllOffers(list);
+        }catch (Exception e){
+            throw new OfferRequestException("There was a problem when saving all offers in database");
         }
     }
 
