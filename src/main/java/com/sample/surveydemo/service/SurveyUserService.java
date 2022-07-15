@@ -1,7 +1,7 @@
 package com.sample.surveydemo.service;
 
 import com.sample.surveydemo.model.SurveyUser;
-import com.sample.surveydemo.model.dto.SurveyUserDto;
+import com.sample.surveydemo.model.dto.user.SurveyUserDto;
 
 import java.util.List;
 import java.util.Optional;

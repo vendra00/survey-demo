@@ -39,6 +39,7 @@ public class OfferServiceImpl implements OfferService{
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(List.of(MediaType.APPLICATION_JSON));
             HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+            //mapper(entity.getBody().toString());
             ResponseEntity<OfferMapper> response = restTemplate.exchange(GET_ALL_OFFERS_API, HttpMethod.GET, entity, OfferMapper.class);
             processAndSaveOffers(response);
             return response;
@@ -59,18 +60,21 @@ public class OfferServiceImpl implements OfferService{
             }
             saveAllOffers(list);
         }catch (Exception e){
+            log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when processing all offers in database");
         }
     }
 
     @Override
-    public List<Offer> saveAllOffers(List<Offer> list) {
+    public void saveAllOffers(List<Offer> list) {
         log.info("Save All Offers - Service Call");
         try {
-            return repository.saveAll(list);
+            repository.saveAll(list);
         }  catch (Exception e) {
+            log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when saving all offers in database");
         }
 
     }
+
 }

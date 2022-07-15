@@ -2,7 +2,7 @@ package com.sample.surveydemo.service;
 
 import com.sample.surveydemo.exception.SurveyUserRequestException;
 import com.sample.surveydemo.model.SurveyUser;
-import com.sample.surveydemo.model.dto.SurveyUserDto;
+import com.sample.surveydemo.model.dto.user.SurveyUserDto;
 import com.sample.surveydemo.repository.SurveyUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

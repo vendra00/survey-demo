@@ -1,4 +1,4 @@
-package com.sample.surveydemo.model;
+package com.sample.surveydemo.model.dto.region;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sample.surveydemo.model.dto.region.RegionData;

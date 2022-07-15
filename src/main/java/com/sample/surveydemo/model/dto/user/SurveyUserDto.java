@@ -1,4 +1,4 @@
-package com.sample.surveydemo.model.dto;
+package com.sample.surveydemo.model.dto.user;
 
 import com.sample.surveydemo.model.SurveyUser;
 import lombok.Getter;

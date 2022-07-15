@@ -2,7 +2,7 @@ package com.sample.surveydemo.model.dto.country;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sample.surveydemo.model.Region;
+import com.sample.surveydemo.model.dto.region.Region;
 import lombok.Getter;
 import lombok.Setter;
 

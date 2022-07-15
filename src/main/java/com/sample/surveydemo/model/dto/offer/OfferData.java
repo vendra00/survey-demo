@@ -15,4 +15,5 @@ public class OfferData {
 
     //@JsonProperty("Country")
     private CountryMapper country;
+
 }

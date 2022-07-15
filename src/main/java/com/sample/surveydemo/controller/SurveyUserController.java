@@ -1,7 +1,7 @@
 package com.sample.surveydemo.controller;
 
 import com.sample.surveydemo.model.SurveyUser;
-import com.sample.surveydemo.model.dto.SurveyUserDto;
+import com.sample.surveydemo.model.dto.user.SurveyUserDto;
 import com.sample.surveydemo.service.SurveyUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

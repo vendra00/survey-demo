@@ -13,7 +13,9 @@ public class SurveyDemoApplication {
     }
 
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+    public RestTemplate restTemplate() {return new RestTemplate();}
+
+
+
+
 }

@@ -9,6 +9,6 @@ import java.util.List;
 public interface OfferService {
     ResponseEntity<OfferMapper> findAllOffersApi();
 
-    List<Offer> saveAllOffers(List<Offer> list);
+    void saveAllOffers(List<Offer> list);
 
 }
