@@ -32,6 +32,10 @@ public class OfferServiceImpl implements OfferService{
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Method that get all offers and parse them to POJOs and make it able to be manipulated in JAVA.
+     * @return response from the API as a mapped JSON
+     */
     @Override
     public ResponseEntity<OfferMapper> findAllOffersApi() {
         log.info("Find All Offers From Api - Service Call");
@@ -39,7 +43,6 @@ public class OfferServiceImpl implements OfferService{
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(List.of(MediaType.APPLICATION_JSON));
             HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-            //mapper(entity.getBody().toString());
             ResponseEntity<OfferMapper> response = restTemplate.exchange(GET_ALL_OFFERS_API, HttpMethod.GET, entity, OfferMapper.class);
             processAndSaveOffers(response);
             return response;
@@ -49,6 +52,10 @@ public class OfferServiceImpl implements OfferService{
         }
     }
 
+    /**
+     * Method responsible to process and save all the full Offers as list of Offers Objects.
+     * @param response a list of parsed full offers from a JSON archive.
+     */
     private void processAndSaveOffers(ResponseEntity<OfferMapper> response) {
         log.info("Process and save Offers - Service Call");
         Map<String, OfferData> map;
@@ -65,6 +72,10 @@ public class OfferServiceImpl implements OfferService{
         }
     }
 
+    /**
+     * Method that will receive and save a list of Offers in our Database.
+     * @param list List of Offers.
+     */
     @Override
     public void saveAllOffers(List<Offer> list) {
         log.info("Save All Offers - Service Call");
