@@ -37,5 +37,4 @@ public class OfferController {
         log.info("Find Offer By ID Database - Controller Call");
         return ResponseEntity.ok().body(service.findOfferById(id).orElseThrow());
     }
-
 }
