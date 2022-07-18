@@ -3,6 +3,7 @@ package com.sample.surveydemo.controller;
 import com.sample.surveydemo.model.Offer;
 import com.sample.surveydemo.model.dto.offer.OfferMapper;
 import com.sample.surveydemo.service.OfferService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @Slf4j
+@Api
 @RestController
 @RequestMapping("/offer")
 public class OfferController {
@@ -27,7 +29,7 @@ public class OfferController {
     @GetMapping("/find-all-offers-api")
     public ResponseEntity<OfferMapper> findAllOffersApi() {
         log.info("Find All Offers From Api - Controller Call");
-        return service.findAllOffersApi();
+        return ResponseEntity.ok().body(service.findAllOffersApi().getBody());
     }
 
     @GetMapping("/find-offer-by-id-db/{id}")
