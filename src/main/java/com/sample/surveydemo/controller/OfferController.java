@@ -35,8 +35,7 @@ public class OfferController {
     @GetMapping("/find-offer-by-id-db/{id}")
     public ResponseEntity<Offer> findAllOffersApi(@PathVariable("id") Long id) {
         log.info("Find Offer By ID Database - Controller Call");
-        Optional<Offer> offer = service.findOfferById(id);
-        return ResponseEntity.ok().body(offer.orElseThrow());
+        return ResponseEntity.ok().body(service.findOfferById(id).orElseThrow());
     }
 
 }
