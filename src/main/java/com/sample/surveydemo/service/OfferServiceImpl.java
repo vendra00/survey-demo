@@ -88,4 +88,20 @@ public class OfferServiceImpl implements OfferService{
 
     }
 
+    /**
+     * Method that will get an Offer by ID in our Database.
+     * @param id id passed by the UI;
+     * @return a checked optional Offer.
+     */
+    @Override
+    public Optional<Offer> findOfferById(Long id) {
+        log.info("Find Offer By ID Database - Service Call");
+        Optional<Offer> offer = repository.findById(id);
+        if (offer.isPresent()){
+            return offer;
+        } else {
+            throw new OfferRequestException("There is no offer with ID: " + id + " in database");
+        }
+    }
+
 }

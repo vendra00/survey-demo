@@ -5,6 +5,7 @@ import com.sample.surveydemo.model.dto.offer.OfferMapper;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OfferService {
 
@@ -19,5 +20,12 @@ public interface OfferService {
      * @param list List of Offers
      */
     void saveAllOffers(List<Offer> list);
+
+    /**
+     * Method that will get an Offer by ID in our Database
+     * @param id id passed by the UI;
+     * @return an object of Optional Offer
+     */
+    Optional<Offer> findOfferById(Long id);
 
 }
