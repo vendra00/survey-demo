@@ -32,7 +32,7 @@ public interface OfferService {
 
     /**
      * Method that will get all offers from the db with pagination
-     * @param offSet offset value
+     * @param offSet page number value
      * @param pageSize page size value
      * @return return a list of offers
      */

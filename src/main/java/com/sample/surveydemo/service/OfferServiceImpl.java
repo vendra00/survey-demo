@@ -56,71 +56,6 @@ public class OfferServiceImpl implements OfferService {
     }
 
     /**
-     * Method responsible to process and save all the full Offers as list of Offers Objects.
-     * @param response a list of parsed full offers from a JSON archive.
-     */
-    private void processAndSaveOffers(ResponseEntity<OfferMapper> response) {
-        log.info("Process And Save Offers - Service Call");
-        Map<String, OfferData> map;
-        List<Offer> list = new ArrayList<>();
-        try {
-
-            map = Objects.requireNonNull(response.getBody()).getResponse().getData();
-
-            for (OfferData mapper : map.values()) {
-
-                Offer offer = new Offer();
-
-                offer.setAllowWebsiteLinks(mapper.getOffer().isAllowWebsiteLinks());
-                offer.setAllowMultipleConversions(mapper.getOffer().getAllowMultipleConversions());
-                offer.setApprovalStatus(mapper.getOffer().getApprovalStatus());
-                offer.setCurrency(mapper.getOffer().getCurrency());
-                offer.setConversionCap(mapper.getOffer().getConversionCap());
-                offer.setDescription(mapper.getOffer().getDescription());
-                offer.setDefaultGoalName(mapper.getOffer().getDefaultGoalName());
-                offer.setDefaultPayout(mapper.getOffer().getDefaultPayout());
-                offer.setDneDownloadUrl(mapper.getOffer().getDneDownloadUrl());
-                offer.setDneListId(mapper.getOffer().getDneListId());
-                offer.setDneThirdPartyList(mapper.getOffer().isDneThirdPartyList());
-                offer.setDneUnsubscribeUrl(mapper.getOffer().getDneUnsubscribeUrl());
-                offer.setEmailInstructions(mapper.getOffer().isEmailInstructions());
-                offer.setEmailInstructionsSubject(mapper.getOffer().getEmailInstructionsSubject());
-                offer.setEmailInstructionsFrom(mapper.getOffer().getEmailInstructionsFrom());
-                offer.setEnforceSecureTrackingLink(mapper.getOffer().getEnforceSecureTrackingLink());
-                offer.setExpirationDate(mapper.getOffer().getExpirationDate());
-                offer.setExpired(mapper.getOffer().isExpired());
-                offer.setFeatured(mapper.getOffer().getFeatured());
-                offer.setHasGoalsEnabled(mapper.getOffer().isHasGoalsEnabled());
-                offer.setLinkPlatform(mapper.getOffer().getLinkPlatform());
-                offer.setModified(mapper.getOffer().getModified());
-                offer.setMonthlyConversionCap(mapper.getOffer().getMonthlyConversionCap());
-                offer.setMonthlyPayoutCap(mapper.getOffer().getMonthlyPayoutCap());
-                offer.setName(mapper.getOffer().getName());
-                offer.setPayoutCap(mapper.getOffer().getPayoutCap());
-                offer.setPayoutType(mapper.getOffer().getPayoutType());
-                offer.setPercentPayout(mapper.getOffer().getPercentPayout());
-                offer.setPreviewUrl(mapper.getOffer().getPreviewUrl());
-                offer.setProtocol(mapper.getOffer().getProtocol());
-                offer.setRequireApproval(mapper.getOffer().isRequireApproval());
-                offer.setRequireTermsConditions(mapper.getOffer().getRequireTermsConditions());
-                offer.setSessionHours(mapper.getOffer().getSessionHours());
-                offer.setShowCustomVariables(mapper.getOffer().isShowCustomVariables());
-                offer.setShowMailList(mapper.getOffer().isShowMailList());
-                offer.setStatus(mapper.getOffer().getStatus());
-                offer.setUsePayoutGroups(mapper.getOffer().getUsePayoutGroups());
-                offer.setUseTargetRules(mapper.getOffer().isUseTargetRules());
-
-                list.add(offer);
-            }
-
-            saveAllOffers(list);
-        } catch (Exception e) {
-            log.error("ERROR : " + e);
-            throw new OfferRequestException("There was a problem when processing all offers in database");
-        }
-    }
-
-    /**
      * Method that will receive and save a list of Offers in our Database.
      * @param list List of Offers.
      */
@@ -154,12 +89,81 @@ public class OfferServiceImpl implements OfferService {
 
     /**
      * Method that receives a list of Offers only and save in the Database.
-     * @param offSet offset value
+     * @param offSet page number value
      * @param pageSize page size value
      * @return list pageable offers
      */
     @Override
     public Page<Offer> findAllOffersDb(int offSet, int pageSize) {
         return repository.findAll(PageRequest.of(offSet,pageSize));
+    }
+
+    /**
+     * Method responsible to process and save all the full Offers as list of Offers Objects.
+     * @param response a list of parsed full offers from a JSON archive.
+     */
+    private void processAndSaveOffers(ResponseEntity<OfferMapper> response) {
+        log.info("Process And Save Offers - Service Call");
+        Map<String, OfferData> map;
+        List<Offer> list = new ArrayList<>();
+        try {
+
+            map = Objects.requireNonNull(response.getBody()).getResponse().getData();
+
+            for (OfferData mapper : map.values()) {
+
+                Offer offer = new Offer();
+
+                OfferDtoToOfferConverter(mapper, offer);
+
+                list.add(offer);
+            }
+
+            saveAllOffers(list);
+        } catch (Exception e) {
+            log.error("ERROR : " + e);
+            throw new OfferRequestException("There was a problem when processing all offers in database");
+        }
+    }
+
+    private void OfferDtoToOfferConverter(OfferData mapper, Offer offer) {
+        offer.setAllowWebsiteLinks(mapper.getOffer().isAllowWebsiteLinks());
+        offer.setAllowMultipleConversions(mapper.getOffer().getAllowMultipleConversions());
+        offer.setApprovalStatus(mapper.getOffer().getApprovalStatus());
+        offer.setCurrency(mapper.getOffer().getCurrency());
+        offer.setConversionCap(mapper.getOffer().getConversionCap());
+        offer.setDescription(mapper.getOffer().getDescription());
+        offer.setDefaultGoalName(mapper.getOffer().getDefaultGoalName());
+        offer.setDefaultPayout(mapper.getOffer().getDefaultPayout());
+        offer.setDneDownloadUrl(mapper.getOffer().getDneDownloadUrl());
+        offer.setDneListId(mapper.getOffer().getDneListId());
+        offer.setDneThirdPartyList(mapper.getOffer().isDneThirdPartyList());
+        offer.setDneUnsubscribeUrl(mapper.getOffer().getDneUnsubscribeUrl());
+        offer.setEmailInstructions(mapper.getOffer().isEmailInstructions());
+        offer.setEmailInstructionsSubject(mapper.getOffer().getEmailInstructionsSubject());
+        offer.setEmailInstructionsFrom(mapper.getOffer().getEmailInstructionsFrom());
+        offer.setEnforceSecureTrackingLink(mapper.getOffer().getEnforceSecureTrackingLink());
+        offer.setExpirationDate(mapper.getOffer().getExpirationDate());
+        offer.setExpired(mapper.getOffer().isExpired());
+        offer.setFeatured(mapper.getOffer().getFeatured());
+        offer.setHasGoalsEnabled(mapper.getOffer().isHasGoalsEnabled());
+        offer.setLinkPlatform(mapper.getOffer().getLinkPlatform());
+        offer.setModified(mapper.getOffer().getModified());
+        offer.setMonthlyConversionCap(mapper.getOffer().getMonthlyConversionCap());
+        offer.setMonthlyPayoutCap(mapper.getOffer().getMonthlyPayoutCap());
+        offer.setName(mapper.getOffer().getName());
+        offer.setPayoutCap(mapper.getOffer().getPayoutCap());
+        offer.setPayoutType(mapper.getOffer().getPayoutType());
+        offer.setPercentPayout(mapper.getOffer().getPercentPayout());
+        offer.setPreviewUrl(mapper.getOffer().getPreviewUrl());
+        offer.setProtocol(mapper.getOffer().getProtocol());
+        offer.setRequireApproval(mapper.getOffer().isRequireApproval());
+        offer.setRequireTermsConditions(mapper.getOffer().getRequireTermsConditions());
+        offer.setSessionHours(mapper.getOffer().getSessionHours());
+        offer.setShowCustomVariables(mapper.getOffer().isShowCustomVariables());
+        offer.setShowMailList(mapper.getOffer().isShowMailList());
+        offer.setStatus(mapper.getOffer().getStatus());
+        offer.setUsePayoutGroups(mapper.getOffer().getUsePayoutGroups());
+        offer.setUseTargetRules(mapper.getOffer().isUseTargetRules());
     }
 }
