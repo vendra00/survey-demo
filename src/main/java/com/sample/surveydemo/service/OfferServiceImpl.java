@@ -7,21 +7,24 @@ import com.sample.surveydemo.model.dto.offer.OfferMapper;
 import com.sample.surveydemo.repository.OfferRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
-@Service @Slf4j
-public class OfferServiceImpl implements OfferService{
+@Service
+@Slf4j
+public class OfferServiceImpl implements OfferService {
 
     private static final String PARTNER_ID = "panthera";
     private static final String API_KEY = "5a69f5fe6ce2bac3cc3d698987e92455154560d35838cf8466f8fcf184b1360d";
     private static final String API_VERSION = "Apiv3";
     private static final String TARGET = "Affiliate_Offer";
     private static final String METHOD = "findAll&contain[]=Country";
-    public static final String GET_ALL_OFFERS_API = "https://" + PARTNER_ID + ".api.hasoffers.com/"+ API_VERSION + "/json?api_key=" + API_KEY + "&Target=" + TARGET + "&Method="+ METHOD;
+    public static final String GET_ALL_OFFERS_API = "https://" + PARTNER_ID + ".api.hasoffers.com/" + API_VERSION + "/json?api_key=" + API_KEY + "&Target=" + TARGET + "&Method=" + METHOD;
 
     private final OfferRepository repository;
     private final RestTemplate restTemplate;
@@ -39,14 +42,14 @@ public class OfferServiceImpl implements OfferService{
     @Override
     public ResponseEntity<OfferMapper> findAllOffersApi() {
         log.info("Find All Offers From Api - Service Call");
-        try{
+        try {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(List.of(MediaType.APPLICATION_JSON));
             HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
             ResponseEntity<OfferMapper> response = restTemplate.exchange(GET_ALL_OFFERS_API, HttpMethod.GET, entity, OfferMapper.class);
             processAndSaveOffers(response);
             return response;
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when fetching all offers");
         }
@@ -57,16 +60,61 @@ public class OfferServiceImpl implements OfferService{
      * @param response a list of parsed full offers from a JSON archive.
      */
     private void processAndSaveOffers(ResponseEntity<OfferMapper> response) {
-        log.info("Process and save Offers - Service Call");
+        log.info("Process And Save Offers - Service Call");
         Map<String, OfferData> map;
         List<Offer> list = new ArrayList<>();
-        try{
+        try {
+
             map = Objects.requireNonNull(response.getBody()).getResponse().getData();
-            for (OfferData mapper : map.values()){
-                list.add(mapper.getOffer());
+
+            for (OfferData mapper : map.values()) {
+
+                Offer offer = new Offer();
+
+                offer.setAllowWebsiteLinks(mapper.getOffer().isAllowWebsiteLinks());
+                offer.setAllowMultipleConversions(mapper.getOffer().getAllowMultipleConversions());
+                offer.setApprovalStatus(mapper.getOffer().getApprovalStatus());
+                offer.setCurrency(mapper.getOffer().getCurrency());
+                offer.setConversionCap(mapper.getOffer().getConversionCap());
+                offer.setDescription(mapper.getOffer().getDescription());
+                offer.setDefaultGoalName(mapper.getOffer().getDefaultGoalName());
+                offer.setDefaultPayout(mapper.getOffer().getDefaultPayout());
+                offer.setDneDownloadUrl(mapper.getOffer().getDneDownloadUrl());
+                offer.setDneListId(mapper.getOffer().getDneListId());
+                offer.setDneThirdPartyList(mapper.getOffer().isDneThirdPartyList());
+                offer.setDneUnsubscribeUrl(mapper.getOffer().getDneUnsubscribeUrl());
+                offer.setEmailInstructions(mapper.getOffer().isEmailInstructions());
+                offer.setEmailInstructionsSubject(mapper.getOffer().getEmailInstructionsSubject());
+                offer.setEmailInstructionsFrom(mapper.getOffer().getEmailInstructionsFrom());
+                offer.setEnforceSecureTrackingLink(mapper.getOffer().getEnforceSecureTrackingLink());
+                offer.setExpirationDate(mapper.getOffer().getExpirationDate());
+                offer.setExpired(mapper.getOffer().isExpired());
+                offer.setFeatured(mapper.getOffer().getFeatured());
+                offer.setHasGoalsEnabled(mapper.getOffer().isHasGoalsEnabled());
+                offer.setLinkPlatform(mapper.getOffer().getLinkPlatform());
+                offer.setModified(mapper.getOffer().getModified());
+                offer.setMonthlyConversionCap(mapper.getOffer().getMonthlyConversionCap());
+                offer.setMonthlyPayoutCap(mapper.getOffer().getMonthlyPayoutCap());
+                offer.setName(mapper.getOffer().getName());
+                offer.setPayoutCap(mapper.getOffer().getPayoutCap());
+                offer.setPayoutType(mapper.getOffer().getPayoutType());
+                offer.setPercentPayout(mapper.getOffer().getPercentPayout());
+                offer.setPreviewUrl(mapper.getOffer().getPreviewUrl());
+                offer.setProtocol(mapper.getOffer().getProtocol());
+                offer.setRequireApproval(mapper.getOffer().isRequireApproval());
+                offer.setRequireTermsConditions(mapper.getOffer().getRequireTermsConditions());
+                offer.setSessionHours(mapper.getOffer().getSessionHours());
+                offer.setShowCustomVariables(mapper.getOffer().isShowCustomVariables());
+                offer.setShowMailList(mapper.getOffer().isShowMailList());
+                offer.setStatus(mapper.getOffer().getStatus());
+                offer.setUsePayoutGroups(mapper.getOffer().getUsePayoutGroups());
+                offer.setUseTargetRules(mapper.getOffer().isUseTargetRules());
+
+                list.add(offer);
             }
+
             saveAllOffers(list);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when processing all offers in database");
         }
@@ -81,7 +129,7 @@ public class OfferServiceImpl implements OfferService{
         log.info("Save All Offers - Service Call");
         try {
             repository.saveAll(list);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when saving all offers in database");
         }
@@ -97,11 +145,21 @@ public class OfferServiceImpl implements OfferService{
     public Optional<Offer> findOfferById(Long id) {
         log.info("Find Offer By ID Database - Service Call");
         Optional<Offer> offer = repository.findById(id);
-        if (offer.isPresent()){
+        if (offer.isPresent()) {
             return offer;
         } else {
             throw new OfferRequestException("There is no offer with ID: " + id + " in database");
         }
     }
 
+    /**
+     * Method that receives a list of Offers only and save in the Database.
+     * @param offSet offset value
+     * @param pageSize page size value
+     * @return list pageable offers
+     */
+    @Override
+    public Page<Offer> findAllOffersDb(int offSet, int pageSize) {
+        return repository.findAll(PageRequest.of(offSet,pageSize));
+    }
 }

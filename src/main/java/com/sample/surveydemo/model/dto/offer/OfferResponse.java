@@ -10,7 +10,6 @@ import java.util.Map;
 @Getter @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OfferResponse {
-
     @JsonProperty("status")
     private int status;
     @JsonProperty("httpStatus")

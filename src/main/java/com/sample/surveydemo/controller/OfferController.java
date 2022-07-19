@@ -7,11 +7,14 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @Slf4j
 @Api
@@ -37,5 +40,11 @@ public class OfferController {
     public ResponseEntity<Offer> findAllOffersApi(@PathVariable("id") Long id) {
         log.info("Find Offer By ID Database - Controller Call");
         return ResponseEntity.ok().body(service.findOfferById(id).orElseThrow());
+    }
+
+    @GetMapping("/find-all-offers-db/{offset}/{pageSize}")
+    public ResponseEntity<Page<Offer>> findAllOffersDb(@PathVariable int offset, @PathVariable int pageSize) {
+        log.info("Find All Offers From Database - Controller Call");
+        return ResponseEntity.ok().body(service.findAllOffersDb(offset, pageSize));
     }
 }

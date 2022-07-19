@@ -1,6 +1,5 @@
 package com.sample.surveydemo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -16,12 +15,8 @@ import java.time.LocalDateTime;
 @Entity @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Offer {
-
-    @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Table(name = "OFFER_TBL")
+public class Offer extends AbstractEntity {
 
     @Column(name = "expiration_date")
     private LocalDateTime expirationDate;
@@ -32,6 +27,9 @@ public class Offer {
     //Should be Date type but not working
     @Column(name = "featured")
     private String featured;
+
+    @Column(name = "allow_direct_links")
+    private int allowDirectLinks;
 
     @Column(name = "require_terms_conditions")
     private int requireTermsConditions;
@@ -138,4 +136,7 @@ public class Offer {
 
     @Column(name = "approval_status")
     private String approvalStatus;
+
+    @Column(name = "terms_and_conditions")
+    private String termsAndConditions;
 }

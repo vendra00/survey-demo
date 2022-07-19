@@ -2,10 +2,12 @@ package com.sample.surveydemo.service;
 
 import com.sample.surveydemo.model.Offer;
 import com.sample.surveydemo.model.dto.offer.OfferMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface OfferService {
 
@@ -28,4 +30,11 @@ public interface OfferService {
      */
     Optional<Offer> findOfferById(Long id);
 
+    /**
+     * Method that will get all offers from the db with pagination
+     * @param offSet offset value
+     * @param pageSize page size value
+     * @return return a list of offers
+     */
+    Page<Offer> findAllOffersDb(int offSet, int pageSize);
 }
