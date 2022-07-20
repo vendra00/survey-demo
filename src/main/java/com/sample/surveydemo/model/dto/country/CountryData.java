@@ -2,7 +2,7 @@ package com.sample.surveydemo.model.dto.country;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sample.surveydemo.model.dto.region.Region;
+import com.sample.surveydemo.model.dto.region.RegionDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,5 +19,5 @@ public class CountryData {
     @JsonProperty("name")
     private String name;
     @JsonProperty("regions")
-    private List<Region> regions;
+    private List<RegionDto> regions;
 }

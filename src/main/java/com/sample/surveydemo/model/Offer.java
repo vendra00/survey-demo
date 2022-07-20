@@ -12,10 +12,11 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Entity @Getter @Setter
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "OFFER_TBL")
+@Entity(name = "Offer")
 public class Offer extends AbstractEntity {
 
     @Column(name = "expiration_date")
@@ -92,10 +93,10 @@ public class Offer extends AbstractEntity {
     private boolean dneThirdPartyList;
 
     @NotNull
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     private String name;
 
-    @Column(name = "description", length=100000)
+    @Column(name = "description", length=100000, columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "preview_url")
@@ -139,4 +140,5 @@ public class Offer extends AbstractEntity {
 
     @Column(name = "terms_and_conditions")
     private String termsAndConditions;
+
 }
