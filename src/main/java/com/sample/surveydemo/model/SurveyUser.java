@@ -1,13 +1,20 @@
 package com.sample.surveydemo.model;
 
-import com.sample.surveydemo.model.enums.Gender;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-@Entity @Getter @Setter
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "SURVEY_USER_TBL")
+@Entity(name = "SurveyUser")
 public class SurveyUser extends AbstractEntity {
 
     @NotEmpty(message = "first name is required")
@@ -24,4 +31,5 @@ public class SurveyUser extends AbstractEntity {
 
     @NotEmpty(message = "date of birth is required")
     private String birthDate;
+
 }

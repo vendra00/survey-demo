@@ -1,6 +1,10 @@
 package com.sample.surveydemo.service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.*;
 import com.sample.surveydemo.exception.OfferRequestException;
+import com.sample.surveydemo.model.Country;
 import com.sample.surveydemo.model.Offer;
 import com.sample.surveydemo.model.dto.offer.OfferData;
 import com.sample.surveydemo.model.dto.offer.OfferMapper;
@@ -13,6 +17,11 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
 
 @Service
@@ -51,6 +60,7 @@ public class OfferServiceImpl implements OfferService {
             return response;
         } catch (Exception e) {
             log.error("ERROR : " + e);
+            e.printStackTrace();
             throw new OfferRequestException("There was a problem when fetching all offers");
         }
     }
@@ -111,15 +121,15 @@ public class OfferServiceImpl implements OfferService {
     private void processAndSaveOffers(ResponseEntity<OfferMapper> response) {
         log.info("Process And Save Offers - Service Call");
         Map<String, OfferData> map;
-        List<Offer> list = new ArrayList<>();
+        List<Offer> offers = new ArrayList<>();
         try {
             map = Objects.requireNonNull(response.getBody()).getResponse().getData();
             for (OfferData mapper : map.values()) {
                 Offer offer = new Offer();
                 OfferDtoToOfferConverter(mapper, offer);
-                list.add(offer);
+                offers.add(offer);
             }
-            saveAllOffers(list);
+            saveAllOffers(offers);
         } catch (Exception e) {
             log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when processing all offers in database");
@@ -127,7 +137,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     private void OfferDtoToOfferConverter(OfferData mapper, Offer offer) {
-        log.info("OfferDto To Offer Converter - Service Call");
+        log.debug("OfferDto To Offer Converter - Service Call");
         try{
             offer.setAllowWebsiteLinks(mapper.getOffer().isAllowWebsiteLinks());
             offer.setAllowMultipleConversions(mapper.getOffer().getAllowMultipleConversions());
@@ -167,6 +177,7 @@ public class OfferServiceImpl implements OfferService {
             offer.setStatus(mapper.getOffer().getStatus());
             offer.setUsePayoutGroups(mapper.getOffer().getUsePayoutGroups());
             offer.setUseTargetRules(mapper.getOffer().isUseTargetRules());
+
         }catch (Exception e){
             log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when converting a offerDto to Offer");
