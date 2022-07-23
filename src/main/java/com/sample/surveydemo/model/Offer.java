@@ -5,19 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "OFFER_TBL")
 @Entity(name = "Offer")
-public class Offer extends AbstractEntity {
+public class Offer extends AbstractEntity{
 
     @Column(name = "expiration_date")
     private LocalDateTime expirationDate;
@@ -140,5 +140,9 @@ public class Offer extends AbstractEntity {
 
     @Column(name = "terms_and_conditions")
     private String termsAndConditions;
+
+    @OneToMany(targetEntity = Country.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "offer_country_fk", referencedColumnName = "id")
+    private List<Country> countries = new ArrayList<>();
 
 }

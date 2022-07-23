@@ -1,11 +1,9 @@
 package com.sample.surveydemo.service;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.*;
 import com.sample.surveydemo.exception.OfferRequestException;
 import com.sample.surveydemo.model.Country;
 import com.sample.surveydemo.model.Offer;
+import com.sample.surveydemo.model.dto.country.CountryData;
 import com.sample.surveydemo.model.dto.offer.OfferData;
 import com.sample.surveydemo.model.dto.offer.OfferMapper;
 import com.sample.surveydemo.repository.OfferRepository;
@@ -17,11 +15,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.*;
 
 @Service
@@ -128,6 +121,7 @@ public class OfferServiceImpl implements OfferService {
                 Offer offer = new Offer();
                 OfferDtoToOfferConverter(mapper, offer);
                 offers.add(offer);
+
             }
             saveAllOffers(offers);
         } catch (Exception e) {
@@ -136,8 +130,12 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
+
     private void OfferDtoToOfferConverter(OfferData mapper, Offer offer) {
         log.debug("OfferDto To Offer Converter - Service Call");
+        List<Map<String, CountryData>> map;
+        map = Objects.requireNonNull(mapper.getCountry());
+        List<Country> countries = new ArrayList<>();
         try{
             offer.setAllowWebsiteLinks(mapper.getOffer().isAllowWebsiteLinks());
             offer.setAllowMultipleConversions(mapper.getOffer().getAllowMultipleConversions());
@@ -177,6 +175,17 @@ public class OfferServiceImpl implements OfferService {
             offer.setStatus(mapper.getOffer().getStatus());
             offer.setUsePayoutGroups(mapper.getOffer().getUsePayoutGroups());
             offer.setUseTargetRules(mapper.getOffer().isUseTargetRules());
+
+            //Get country values to be mapped into a list
+            for (Map<String, CountryData> countryDataMap: map) {
+                for (CountryData countryData: countryDataMap.values()) {
+                    Country country = new Country();
+                    country.setName(countryData.getName());
+                    country.setCode(countryData.getCode());
+                    countries.add(country);
+                    offer.setCountries(countries);
+                }
+            }
 
         }catch (Exception e){
             log.error("ERROR : " + e);

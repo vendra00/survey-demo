@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -15,7 +13,8 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "COUNTRY_TBL")
 @Entity(name = "Country")
-public class Country extends AbstractEntity {
+public class Country extends AbstractEntity{
+
     @Column(name = "code")
     private String code;
     @Column(name = "name")
