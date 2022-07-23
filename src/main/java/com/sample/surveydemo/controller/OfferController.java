@@ -42,9 +42,15 @@ public class OfferController {
         return ResponseEntity.ok().body(service.findOfferById(id).orElseThrow());
     }
 
-    @GetMapping("/find-all-offers-db/{offset}/{pageSize}")
-    public ResponseEntity<Page<Offer>> findAllOffersDb(@PathVariable int offset, @PathVariable int pageSize) {
+    @GetMapping("/find-all-offers-paged-db/{offset}/{pageSize}")
+    public ResponseEntity<Page<Offer>> findAllOffersPagedDb(@PathVariable int offset, @PathVariable int pageSize) {
+        log.info("Find All Offers Paged From Database - Controller Call");
+        return ResponseEntity.ok().body(service.findAllOffersPagedDb(offset, pageSize));
+    }
+
+    @GetMapping("/find-all-offers-db/")
+    public ResponseEntity<List<Offer>> findAllOffersDb() {
         log.info("Find All Offers From Database - Controller Call");
-        return ResponseEntity.ok().body(service.findAllOffersDb(offset, pageSize));
+        return ResponseEntity.ok().body(service.findAllOffersDb());
     }
 }

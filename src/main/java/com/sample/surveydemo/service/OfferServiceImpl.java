@@ -53,7 +53,6 @@ public class OfferServiceImpl implements OfferService {
             return response;
         } catch (Exception e) {
             log.error("ERROR : " + e);
-            e.printStackTrace();
             throw new OfferRequestException("There was a problem when fetching all offers");
         }
     }
@@ -91,17 +90,32 @@ public class OfferServiceImpl implements OfferService {
     }
 
     /**
-     * Method that receives a list of Offers only and save in the Database.
-     * @param offSet page number value
-     * @param pageSize page size value
-     * @return list pageable offers
+     * Method that returns a list of offers with pagination.
+     * @param offSet page number value.
+     * @param pageSize page size value.
+     * @return list pageable offers.
      */
     @Override
-    public Page<Offer> findAllOffersDb(int offSet, int pageSize) {
-        log.info("Find All Offer In The Database - Service Call");
+    public Page<Offer> findAllOffersPagedDb(int offSet, int pageSize) {
+        log.info("Find All Offer Paged In The Database - Service Call");
         try{
             return repository.findAll(PageRequest.of(offSet,pageSize));
         }catch (Exception e){
+            log.error("ERROR : " + e);
+            throw new OfferRequestException("There was a problem when fetching the offers in database");
+        }
+    }
+
+    /**
+     * Method that return a list of offers from database.
+     * @return list of offers.
+     */
+    @Override
+    public List<Offer> findAllOffersDb() {
+        log.info("Find All Offer In The Database - Service Call");
+        try{
+            return repository.findAll();
+        }catch (Exception e) {
             log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when fetching the offers in database");
         }
@@ -133,10 +147,13 @@ public class OfferServiceImpl implements OfferService {
 
     private void OfferDtoToOfferConverter(OfferData mapper, Offer offer) {
         log.debug("OfferDto To Offer Converter - Service Call");
+
+        List<Country> countries = new ArrayList<>();
         List<Map<String, CountryData>> map;
         map = Objects.requireNonNull(mapper.getCountry());
-        List<Country> countries = new ArrayList<>();
+
         try{
+
             offer.setAllowWebsiteLinks(mapper.getOffer().isAllowWebsiteLinks());
             offer.setAllowMultipleConversions(mapper.getOffer().getAllowMultipleConversions());
             offer.setApprovalStatus(mapper.getOffer().getApprovalStatus());
@@ -191,6 +208,5 @@ public class OfferServiceImpl implements OfferService {
             log.error("ERROR : " + e);
             throw new OfferRequestException("There was a problem when converting a offerDto to Offer");
         }
-
     }
 }

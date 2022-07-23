@@ -35,5 +35,11 @@ public interface OfferService {
      * @param pageSize page size value
      * @return return a list of offers
      */
-    Page<Offer> findAllOffersDb(int offSet, int pageSize);
+    Page<Offer> findAllOffersPagedDb(int offSet, int pageSize);
+
+    /**
+     * Method that will get all offers from the db
+     * @return list of offers
+     */
+    List<Offer> findAllOffersDb();
 }
