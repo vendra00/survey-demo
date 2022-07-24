@@ -42,4 +42,11 @@ public interface OfferService {
      * @return list of offers
      */
     List<Offer> findAllOffersDb();
+
+    /**
+     * Method that will return all offers filtered by country code AU and SG
+     * @return list of offers
+     */
+    List<Offer> findAllByCountryCode();
+
 }

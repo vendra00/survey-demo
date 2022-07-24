@@ -53,4 +53,10 @@ public class OfferController {
         log.info("Find All Offers From Database - Controller Call");
         return ResponseEntity.ok().body(service.findAllOffersDb());
     }
+
+    @GetMapping("/find-all-offers-by-country-code-db/")
+    public ResponseEntity<List<Offer>> findAllByCountryCode() {
+        log.info("Find All Offers By Country Code From Database - Controller Call");
+        return ResponseEntity.ok().body(service.findAllByCountryCode());
+    }
 }

@@ -122,6 +122,21 @@ public class OfferServiceImpl implements OfferService {
     }
 
     /**
+     * Method that will get all offers filtered by country code 'AU' and 'SG
+     * @return list of offers
+     */
+    @Override
+    public List<Offer> findAllByCountryCode() {
+        log.info("Find All Offer By Country Code In The Database - Service Call");
+        try{
+            return repository.searchByCountryCode();
+        }catch (Exception e) {
+            log.error("ERROR : " + e);
+            throw new OfferRequestException("There was a problem when fetching the offers by country code in database");
+        }
+    }
+
+    /**
      * Method responsible to process and save all the full Offers as list of Offers Objects.
      * @param response a list of parsed full offers from a JSON archive.
      */
