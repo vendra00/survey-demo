@@ -12,11 +12,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service @Slf4j
-public class SurveyUserImpl implements SurveyUserService {
+public class SurveyUserServiceImpl implements SurveyUserService {
 
     private final SurveyUserRepository repository;
 
-    public SurveyUserImpl(SurveyUserRepository repository) {
+    public SurveyUserServiceImpl(SurveyUserRepository repository) {
         this.repository = repository;
     }
 
@@ -71,7 +71,6 @@ public class SurveyUserImpl implements SurveyUserService {
             log.error("ERROR : " + e);
             throw new SurveyUserRequestException("There was a problem when creating this user");
         }
-
         return surveyUser;
     }
 

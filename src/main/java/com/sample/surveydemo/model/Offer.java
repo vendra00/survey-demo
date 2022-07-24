@@ -53,16 +53,16 @@ public class Offer extends AbstractEntity{
     @Column(name = "use_payout_groups")
     private int usePayoutGroups;
 
-    @Column(name = "default_payout")
+    @Column(name = "default_payout", columnDefinition = "Decimal(10,2)")
     private double defaultPayout;
 
     @Column(name = "percent_payout")
     private double percentPayout;
 
-    @Column(name = "payout_cap")
+    @Column(name = "payout_cap", columnDefinition = "Decimal(10,2)")
     private double payoutCap;
 
-    @Column(name = "monthly_payout_cap")
+    @Column(name = "monthly_payout_cap", columnDefinition = "Decimal(10,2)")
     private double monthlyPayoutCap;
 
     @Column(name = "require_approval")
@@ -99,7 +99,7 @@ public class Offer extends AbstractEntity{
     @Column(name = "description", length=100000, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "preview_url")
+    @Column(name = "preview_url", length=100000, columnDefinition = "TEXT")
     private String previewUrl;
 
     @Column(name = "currency")
@@ -117,10 +117,10 @@ public class Offer extends AbstractEntity{
     @Column(name = "session_hours")
     private String sessionHours;
 
-    @Column(name = "email_instructions_from")
+    @Column(name = "email_instructions_from", length=100000, columnDefinition = "TEXT")
     private String emailInstructionsFrom;
 
-    @Column(name = "email_instructions_subject")
+    @Column(name = "email_instructions_subject", length=100000, columnDefinition = "TEXT")
     private String emailInstructionsSubject;
 
     @Column(name = "default_goal_name")

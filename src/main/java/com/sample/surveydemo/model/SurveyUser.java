@@ -1,35 +1,40 @@
 package com.sample.surveydemo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.UniqueConstraint;
+import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "SURVEY_USER_TBL")
+@Table(name = "SURVEY_USER_TBL", uniqueConstraints = { @UniqueConstraint(name = "survey_user_email_unique", columnNames = "email") })
 @Entity(name = "SurveyUser")
 public class SurveyUser extends AbstractEntity {
 
-    @NotEmpty(message = "first name is required")
+    @Column(name = "first_name", nullable = false, columnDefinition = "TEXT")
     private String firstName;
 
-    @NotEmpty(message = "last name is required")
+    @Column(name = "last_name", nullable = false, columnDefinition = "TEXT")
     private String lastName;
 
-    @NotEmpty(message = "email is required")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @NotEmpty(message = "gender is required")
+    @Column(name = "gender", nullable = false, columnDefinition = "TEXT")
     private String gender;
 
-    @NotEmpty(message = "date of birth is required")
-    private String birthDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    @Column(name = "birth_date")
+    private Date birthDate;
 
 }

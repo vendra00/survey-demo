@@ -30,8 +30,8 @@ public class SurveyUserController {
         return ResponseEntity.ok(service.getAllSurveyUsersDto());
     }
 
-    @PostMapping({ "/insert-survey-users/" })
-    public ResponseEntity<SurveyUser> addSuperHero(@RequestBody SurveyUser newUser)  {
+    @PostMapping({ "/insert-survey-user/" })
+    public ResponseEntity<SurveyUser> addSurveyUser(@RequestBody SurveyUser newUser)  {
             SurveyUser userBody = service.createSurveyUser(newUser);
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userBody.getId()).toUri();
             return ResponseEntity.created(location).build();
