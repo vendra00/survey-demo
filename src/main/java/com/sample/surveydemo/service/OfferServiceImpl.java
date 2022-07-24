@@ -169,7 +169,7 @@ public class OfferServiceImpl implements OfferService {
 
         try{
 
-            offer.setAllowWebsiteLinks(mapper.getOffer().isAllowWebsiteLinks());
+            offer.setAllowWebsiteLinks(mapper.getOffer().getAllowWebsiteLinks());
             offer.setAllowMultipleConversions(mapper.getOffer().getAllowMultipleConversions());
             offer.setApprovalStatus(mapper.getOffer().getApprovalStatus());
             offer.setCurrency(mapper.getOffer().getCurrency());
@@ -181,14 +181,14 @@ public class OfferServiceImpl implements OfferService {
             offer.setDneListId(mapper.getOffer().getDneListId());
             offer.setDneThirdPartyList(mapper.getOffer().isDneThirdPartyList());
             offer.setDneUnsubscribeUrl(mapper.getOffer().getDneUnsubscribeUrl());
-            offer.setEmailInstructions(mapper.getOffer().isEmailInstructions());
+            offer.setEmailInstructions(mapper.getOffer().getEmailInstructions());
             offer.setEmailInstructionsSubject(mapper.getOffer().getEmailInstructionsSubject());
             offer.setEmailInstructionsFrom(mapper.getOffer().getEmailInstructionsFrom());
             offer.setEnforceSecureTrackingLink(mapper.getOffer().getEnforceSecureTrackingLink());
             offer.setExpirationDate(mapper.getOffer().getExpirationDate());
-            offer.setExpired(mapper.getOffer().isExpired());
+            offer.setIsExpired(mapper.getOffer().getIsExpired());
             offer.setFeatured(mapper.getOffer().getFeatured());
-            offer.setHasGoalsEnabled(mapper.getOffer().isHasGoalsEnabled());
+            offer.setHasGoalsEnabled(mapper.getOffer().getHasGoalsEnabled());
             offer.setLinkPlatform(mapper.getOffer().getLinkPlatform());
             offer.setModified(mapper.getOffer().getModified());
             offer.setMonthlyConversionCap(mapper.getOffer().getMonthlyConversionCap());
@@ -199,14 +199,14 @@ public class OfferServiceImpl implements OfferService {
             offer.setPercentPayout(mapper.getOffer().getPercentPayout());
             offer.setPreviewUrl(mapper.getOffer().getPreviewUrl());
             offer.setProtocol(mapper.getOffer().getProtocol());
-            offer.setRequireApproval(mapper.getOffer().isRequireApproval());
+            offer.setRequireApproval(mapper.getOffer().getRequireApproval());
             offer.setRequireTermsConditions(mapper.getOffer().getRequireTermsConditions());
             offer.setSessionHours(mapper.getOffer().getSessionHours());
-            offer.setShowCustomVariables(mapper.getOffer().isShowCustomVariables());
-            offer.setShowMailList(mapper.getOffer().isShowMailList());
+            offer.setShowCustomVariables(mapper.getOffer().getShowCustomVariables());
+            offer.setShowMailList(mapper.getOffer().getShowMailList());
             offer.setStatus(mapper.getOffer().getStatus());
             offer.setUsePayoutGroups(mapper.getOffer().getUsePayoutGroups());
-            offer.setUseTargetRules(mapper.getOffer().isUseTargetRules());
+            offer.setUseTargetRules(mapper.getOffer().getUseTargetRules());
 
             //Get country values to be mapped into a list
             for (Map<String, CountryData> countryDataMap: map) {

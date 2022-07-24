@@ -20,10 +20,10 @@ import java.util.List;
 public class Offer extends AbstractEntity{
 
     @Column(name = "expiration_date")
-    private LocalDateTime expirationDate;
+    private String expirationDate;
 
     @Column(name = "modified")
-    private Timestamp modified;
+    private String modified;
 
     //Should be Date type but not working
     @Column(name = "featured")
@@ -66,28 +66,28 @@ public class Offer extends AbstractEntity{
     private double monthlyPayoutCap;
 
     @Column(name = "require_approval")
-    private boolean requireApproval;
+    private String requireApproval;
 
     @Column(name = "allow_website_links")
-    private boolean allowWebsiteLinks;
+    private String allowWebsiteLinks;
 
     @Column(name = "show_custom_variables")
-    private boolean showCustomVariables;
+    private String showCustomVariables;
 
     @Column(name = "show_mail_list")
-    private boolean showMailList;
+    private String showMailList;
 
     @Column(name = "email_instructions")
-    private boolean emailInstructions;
+    private String emailInstructions;
 
     @Column(name = "has_goals_enabled")
-    private boolean hasGoalsEnabled;
+    private String hasGoalsEnabled;
 
     @Column(name = "use_target_rules")
-    private boolean useTargetRules;
+    private String useTargetRules;
 
     @Column(name = "is_expired")
-    private boolean isExpired;
+    private String isExpired;
 
     @Column(name = "dne_third_party_list")
     private boolean dneThirdPartyList;
