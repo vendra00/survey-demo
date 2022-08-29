@@ -1,22 +1,16 @@
 package com.sample.surveydemo.model.dto.user;
 
-import com.sample.surveydemo.model.SurveyUser;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 public class SurveyUserDto {
 
     private String firstName;
     private String lastName;
     private String email;
-
-    public SurveyUserDto (SurveyUser surveyUser) {
-        this.firstName = surveyUser.getFirstName();
-        this.lastName = surveyUser.getLastName();
-        this.email = surveyUser.getEmail();
-    }
 }

@@ -21,12 +21,12 @@ public class SurveyUserController {
     }
 
     @GetMapping("/find-all-survey-users")
-    public ResponseEntity<Collection<SurveyUser>> getAllSuperHeroes()  {
+    public ResponseEntity<Collection<SurveyUser>> getAllSurveyUsers()  {
         return ResponseEntity.ok(service.getAllSurveyUsers());
     }
 
     @GetMapping("/find-all-survey-users-dto")
-    public ResponseEntity<Collection<SurveyUserDto>> getAllSuperHeroesDto()  {
+    public ResponseEntity<Collection<SurveyUserDto>> getAllSurveyUsersDto()  {
         return ResponseEntity.ok(service.getAllSurveyUsersDto());
     }
 

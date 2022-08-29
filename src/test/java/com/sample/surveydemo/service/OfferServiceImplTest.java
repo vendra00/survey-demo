@@ -1,17 +1,16 @@
 package com.sample.surveydemo.service;
 
-import com.sample.surveydemo.model.dto.offer.OfferMapper;
+import com.sample.surveydemo.model.Offer;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 
-import java.util.Objects;
-
-@SpringBootTest
+@SpringBootTest  @Slf4j
 class OfferServiceImplTest {
 
     @Autowired
@@ -23,36 +22,20 @@ class OfferServiceImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    public void testJasonCountry(){
-        String json = """
-                {
-                    "request": {
-                        "Target": "Affiliate_Offer",
-                        "Format": "json",
-                        "Service": "HasOffers",
-                        "Version": "2",
-                        "api_key": "5a69f5fe6ce2bac3cc3d698987e92455154560d35838cf8466f8fcf184b1360d",
-                        "Method": "findAll",
-                        "contain": [
-                            "Country"
-                        ]
-                    },
-                    "response": {
-                        "status": 1,
-                        "httpStatus": 200,
-                        "data": {
-                            "18292": {
-                                "Offer": {
-                                    "id": "18292",
-                                    "name": "247 Profit Formula",
-                                    "approval_status": "approved"
-                                },
-                                "Country":[]
-                                }
-                            }}}}""";
+    Offer offer = new Offer();
 
-        ResponseEntity<OfferMapper> responseEntity = offerService.findAllOffersApi();
-        Objects.requireNonNull(responseEntity.getBody()).getResponse().getData().values();
+    @Test
+    public void testFindOfferByIdInDbWithSameIdValue() {
+        offer.setId(100L);
+        Assertions.assertNotNull(offer.getId());
+        Assertions.assertEquals(100L, offer.getId());
     }
+
+    @Test
+    public void testFindOfferByIdInDbWithDifferentIdValue() {
+        offer.setId(100L);
+        Assertions.assertNotNull(offer.getId());
+        Assertions.assertNotEquals(101L, offer.getId());
+    }
+
 }

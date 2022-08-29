@@ -150,7 +150,6 @@ public class OfferServiceImpl implements OfferService {
                 Offer offer = new Offer();
                 OfferDtoToOfferConverter(mapper, offer);
                 offers.add(offer);
-
             }
             saveAllOffers(offers);
         } catch (Exception e) {
